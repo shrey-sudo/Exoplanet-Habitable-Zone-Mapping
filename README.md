@@ -21,3 +21,6 @@ This project calculates and visualizes the habitable zones around stars based on
 
 ## License
 This project is licensed under the MIT License.
+
+
+![Project Screenshot](https://github.com/shrey-sudo/Exoplanet-Habitable-Zone-Mapping/blob/main/screenshot.png)

@@ -3,7 +3,6 @@ from tkinter import ttk, messagebox
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Function to create the plot
 def create_plot(luminosity, exoplanets, planet_labels):
     d_inner = 0.95 * np.sqrt(luminosity)
     d_outer = 1.37 * np.sqrt(luminosity)
@@ -37,7 +36,6 @@ def create_plot(luminosity, exoplanets, planet_labels):
 
     plt.show()
 
-# Function to handle planetary system selection
 def select_planetary_system():
     selected_index = system_combobox.current()
     if selected_index == -1:
@@ -53,31 +51,24 @@ def select_planetary_system():
         f"Distance: {system['distance']} light years"
     )
     
-    # Display planetary system details
     details_label.config(text=details)
 
-    # Populate the exoplanet dropdown
     exoplanet_combobox['values'] = system['planet_labels']
     exoplanet_combobox.set("")  # Clear previous selection
 
-    # Clear exoplanet details
     exoplanet_data_label.config(text="")
 
-    # Plot the habitable zone and exoplanets
     create_plot(system['luminosity'], system['exoplanets'], system['planet_labels'])
 
-# Function to handle exoplanet selection
 def select_exoplanet():
     selected_planet_index = exoplanet_combobox.current()
     if selected_planet_index == -1:
         messagebox.showerror("Error", "Please select an exoplanet.")
         return
 
-    # Get the selected planetary system
     selected_system_index = system_combobox.current()
     system = planetary_systems[selected_system_index]
 
-    # Get details of the selected exoplanet
     planet_name = system['planet_labels'][selected_planet_index]
     eccentricity = system['eccentricity'][selected_planet_index]
     status = system['status'][selected_planet_index]
@@ -94,7 +85,6 @@ def select_exoplanet():
     )
     exoplanet_data_label.config(text=exoplanet_details)
 
-# Function to handle custom data input
 def plot_custom_data():
     try:
         luminosity = float(luminosity_entry.get())
@@ -107,7 +97,6 @@ def plot_custom_data():
     except ValueError:
         messagebox.showerror("Error", "Invalid input. Please enter valid numbers.")
 
-# Planetary systems data
 planetary_systems = [
     { 
         "name": "Sun",
@@ -119,7 +108,7 @@ planetary_systems = [
         "planet_labels": ["1.Mercury", "2.Venus", "3.Earth", "4.Mars",
                           "5.Jupiter", "6.Saturn", "7.Uranus", "8.Neptune"],
         "eccentricity": ["0.2056", "0.0068", "0.0167", "0.0934", "0.0484", "0.0541", "0.0472", "0.0086"],
-        "status": ["Inhabitable"] * 8,
+        "status": ["Inhabitable","Inhabitable","Habitable","Inhabitable","Inhabitable","Inhabitable","Inhabitable","Inhabitable"]
         "mass": ["-", "-", "-", "-", "-", "-", "15", "203"],
         "orbital_period_period_period_period": ["87.97", "224.70", "365.26", "686.98", "4,332.82", "10,755.70", "30,687.15", "60,190.03"]
     },
@@ -935,21 +924,14 @@ planetary_systems = [
         "orbital_period_period_period_period": ["5.771", "13.5052"]
     }
 ]
-
-# Create the main window
 root = tk.Tk()
 root.title("Habitable Zone Mapping")
 root.geometry("800x1000")  # Set a larger window size
 root.configure(bg="#f0f0f0")  # Set background color
 
-# Define a larger font
 font_large = ("Helvetica", 14)
-
-# Header
 header_label = tk.Label(root, text="Habitable Zone Mapping", font=("Helvetica", 20, "bold"), bg="#f0f0f0", fg="#333")
 header_label.pack(pady=20)
-
-# Planetary system selection frame
 system_frame = tk.Frame(root, bg="#f0f0f0")
 system_frame.pack(pady=10, padx=20, fill="x")
 
@@ -962,14 +944,12 @@ system_combobox.pack(fill="x", pady=5)
 select_button = tk.Button(system_frame, text="Show System Details", command=select_planetary_system, font=font_large, bg="#4CAF50", fg="white")
 select_button.pack(pady=10)
 
-# Details frame
 details_frame = tk.Frame(root, bg="#f0f0f0")
 details_frame.pack(pady=10, padx=20, fill="x")
 
 details_label = tk.Label(details_frame, text="", font=("Helvetica", 12), justify="left", bg="#f0f0f0", anchor="w")
 details_label.pack(fill="x")
 
-# Exoplanet selection frame
 exoplanet_frame = tk.Frame(root, bg="#f0f0f0")
 exoplanet_frame.pack(pady=10, padx=20, fill="x")
 
@@ -985,7 +965,6 @@ exoplanet_button.pack(pady=10)
 exoplanet_data_label = tk.Label(exoplanet_frame, text="", font=("Helvetica", 12), justify="left", bg="#f0f0f0", anchor="w")
 exoplanet_data_label.pack(fill="x")
 
-# Custom data input frame
 custom_frame = tk.Frame(root, bg="#f0f0f0")
 custom_frame.pack(pady=20, padx=20, fill="x")
 
@@ -1010,5 +989,4 @@ planet_labels_entry.pack(fill="x", pady=5)
 plot_button = tk.Button(custom_frame, text="Plot Custom Data", command=plot_custom_data, font=font_large, bg="#4CAF50", fg="white")
 plot_button.pack(pady=10)
 
-# Run the application
 root.mainloop()
